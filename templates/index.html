@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Book Review</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style media="screen">
+      body {
+   background-image: url("static/book-review.jpg");
+   background-color: #cccccc;
+   background-position: center;
+  }
+    .center_div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height:auto;
+}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <body class="background">
+    <!-- --------------------------navigation - bar---------------------------------------- -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">BookReview</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav ml-auto  mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('signin')}}">Sign in</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('index')}}">Register</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+    <!-- ----------------------------registration form------------------------------- -->
+    <div class="container">
+      <div class="row">
+        <div class="jumbotron col-lg-6 com-sm-12" height:auto;>
+          <h2>Welcome to the world of books</h2>
+          <h3>We hope you will get wonderful experience here</h3>
+          <h4>Really passionate aboute readings?</h4>
+          <h4>Sign Up now!</h4>
+          <p>And get the reviews of over 50,000+ books</p>
+        </div>
+        <div class="col-lg-6 co-sm-12">
+          <form class="jumbotron" action="{{url_for('register')}}" method=post>
+            <div class="form-group">
+              <label for="name">Name*</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Username*</label>
+              <input type="text" class="form-control" name="user" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="@username" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password*</label>
+              <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+      </body>
+</html>
