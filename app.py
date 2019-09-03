@@ -25,7 +25,7 @@ def register():
     username=request.form.get("user")
     password=request.form.get("password")
     row=db.execute("select id from users where username=:username",{"username":username}).fetchone()
-    if row in None:
+    if row is None:
         db.execute("insert into users(name,username,password) values(:name,:username,:password)",{"name":name,"username":username,"password":password})
         db.commit()
         return render_template("message.html",message="You have successfully registered\nSign in and go ahead")
