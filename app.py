@@ -59,7 +59,7 @@ def books():
     # global uname
     query=request.form.get("query")
     query1='%'+query+'%'
-    bookslist=db.execute("select * from books where isbn like :isbn or title like :title or author like :author",{"isbn":query1,"title":query1,"author":query1}).fetchall()
+    bookslist=db.execute("select * from books where isbn like :isbn or title like :title or author like :author",{"isbn":query1.title(),"title":query1.title(),"author":query1.title()}).fetchall()
     if len(bookslist) == 0:
         return render_template("error.html",message="Oops! No such book found")
     else:
