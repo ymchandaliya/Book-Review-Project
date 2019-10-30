@@ -7,7 +7,7 @@ from flask_session import Session
 
 app=Flask(__name__)
 
-engine=create_engine("postgres://bftqfkexrtucxu:79677fd3c30aed91117949656c9b2aa42663fb3ef287ef94a4f862738370c1cd@ec2-174-129-27-158.compute-1.amazonaws.com:5432/dch7g1rbas0o3o")
+engine=create_engine("DATABASE_URL")
 db=scoped_session(sessionmaker(bind=engine))
 
 app.config["SESSION_PERMANENT"]=False
@@ -78,7 +78,7 @@ def signout():
 @app.route("/details/<string:isbn>")
 def details(isbn):
     # global uname
-    res = requests.get("https://www.goodreads.com/book/review_counts.json",params={"key":"4obs0JcZebFbBlPvF8Gf3g","isbns":isbn})
+    res = requests.get("https://www.goodreads.com/book/review_counts.json",params={"key":"KEY","isbns":isbn})
     result=res.json()
     rating=result['books'][0]['work_text_reviews_count']
     average=result['books'][0]['average_rating']
