@@ -46,7 +46,7 @@ def signin():
 #CHECKS USER'S CREDENTIALS
 @app.route("/search",methods=["post"])
 def check():
-    session.clear()
+    #session.clear()
     #users=db.execute("select username,password from users").fetchall()
     username=request.form.get("user")
     # global uname
@@ -68,7 +68,9 @@ def books():
         # print(session["user_name"])
         query=request.form.get("query")
         query1='%'+query+'%'
+        print(query)
         bookslist=db.execute("select * from books where isbn like :isbn or title like :title or author like :author",{"isbn":query1.title(),"title":query1.title(),"author":query1.title()}).fetchall()
+
         if len(bookslist) == 0:
             return render_template("error.html",message="Oops! No such book found")
         else:
@@ -96,14 +98,27 @@ def signout():
 def details(isbn):
     # global uname
     try:
-        res = requests.get("https://www.goodreads.com/book/review_counts.json",params={"key":"4obs0JcZebFbBlPvF8Gf3g","isbns":isbn})
-        result=res.json()
-        rating=result['books'][0]['work_text_reviews_count']
-        average=result['books'][0]['average_rating']
-        # users=db.execute("select id from users").fetchall()
+        # res = requests.get("https://www.goodreads.com/book/review_counts.json",params={"key":"4obs0JcZebFbBlPvF8Gf3g","isbns":isbn})
+        # result=res.json()
+        # print(result)
+        # rating=result['books'][0]['work_text_reviews_count']
+        # average=result['books'][0]['average_rating']
+        users=db.execute("select id from users").fetchall()
         book=db.execute("select id,title,author,isbn,year from books where isbn=:isbn",{"isbn":isbn}).fetchone()
+        print(book)
         reviews=db.execute("select users.username,reviews.rating,reviews.review from reviews INNER JOIN users on reviews.user_id=users.id where reviews.isbn=:isbn",{"isbn":isbn}).fetchall()
-        return render_template("book.html",book=book,rating=rating,average=average,username=session["user_name"],reviews=reviews)
+        print(reviews)
+        print(session["user_name"])
+        avg_rate = db.execute("select avg(rating) from reviews where isbn=:isbn",{"isbn":isbn}).first()
+        # print(avg_rate)
+        avg_rate = str(avg_rate)
+        a = avg_rate.split("'")
+        print(a)
+        avg_rate = a[1][:3]
+        # print(round(avg_rate,1))
+        # avg_rate = int(round(avg_rate,1))
+        print(avg_rate)
+        return render_template("book.html",book=book,username=session["user_name"],reviews=reviews,avg_rate=avg_rate)
     except:
         return render_template("signin.html")
 
@@ -117,6 +132,7 @@ def reviews(book_id):
         if count is None:
             db.execute("insert into reviews(rating,review,user_id,book_id,isbn) values (:rating,:review,:user_id,:book_id,:isbn)",{"rating":rating,"review":review,"user_id":session["user_id"],"book_id":book_id,"isbn":isbn.isbn})
             db.commit()
+            # return redirect(url_for('details',isbn=isbn))
             return render_template("error.html",message="Thank You! for submitting review")
         else:
             return render_template("error.html",message="You have already submitted review for this book")

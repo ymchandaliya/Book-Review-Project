@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Book Details</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style media="screen">
       body {
    background-image: url("static/book-review.jpg");
@@ -17,6 +18,9 @@
     left: 50%;
     transform: translate(-50%,-50%);
     height:auto;
+}
+.checked {
+  color: orange;
 }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -50,12 +54,12 @@
 <div class="container">
   <div class="row jumbotron">
     <div class="col-lg-6 col-xs-12">
-      <h2>{{book.title}}</h2>
-      <h2>{{book.author}}</h2>
-      <h3>{{book.isbn}}</h3>
-      <h3>{{book.year}}</h3>
-      <p>No. of ratings:{{rating}}</p>
-      <p>Average rating:{{average}}</p>
+      <h2>Title : {{book.title}}</h2>
+      <h2>Author : {{book.author}}</h2>
+      <h3>ISBN : {{book.isbn}}</h3>
+      <h3>Publication Year : {{book.year}}</h3>
+      <!-- <p>No. of ratings:{{rating}}</p> -->
+      <p>Average rating : {{avg_rate}}</p>
       </div>
       <form action="{{url_for('reviews',book_id=book.id)}}" method="post" class="col-lg-6 col-xs-12">
         <div class="form-group">
@@ -79,7 +83,9 @@
     {% for review in reviews %}
     <div class="container jumbotron">
       <h3>{{review.username}}</h3>
-      <p>rating:{{review.rating}}</p>
+      {% for i in range(review.rating) %}
+      <span class="fa fa-star checked"></span>
+      {% endfor %}
       <p>{{review.review}}</p>
     </div>
     {% endfor %}
